@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h2>Selamat datang, {{ request.user.username }}!</h2>
+    <p>Ini adalah dashboard untuk user biasa.</p>
+    <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
