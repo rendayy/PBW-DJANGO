@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Create
 
 class ProfileInline(admin.StackedInline):
     model = Profile
@@ -25,3 +25,9 @@ admin.site.register(User, CustomUserAdmin)
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'role')
+
+@admin.register(Create)
+class CreateAdmin(admin.ModelAdmin):
+    list_display = ('judul', 'user', 'kategori', 'tanggal_upload', 'status')
+    list_filter = ('status', 'tanggal_upload')
+    search_fields = ('judul', 'kategori', 'deskripsi', 'user__username')

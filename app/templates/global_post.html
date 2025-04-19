@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Galeri Global</title>
+</head>
+<body>
+    <h1>Galeri Gambar (Approved)</h1>
+    {% for gambar in gambar_list %}
+        <div style="margin-bottom: 20px;">
+            <h3>{{ gambar.judul }}</h3>
+            <p><strong>Diposting oleh:</strong> {{ gambar.user.username }}</p> <!-- Tambahan -->
+            <img src="{{ gambar.gambar.url }}" width="300" />
+            <p><strong>Kategori:</strong> {{ gambar.kategori }}</p>
+            <p>{{ gambar.deskripsi }}</p>
+            <p><em>Diunggah pada: {{ gambar.tanggal_upload }}</em></p>
+        </div>
+    {% empty %}
+        <p>Belum ada gambar yang disetujui.</p>
+    {% endfor %}
+</body>
+</html>
