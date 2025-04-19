@@ -1,0 +1,52 @@
+<!-- accounts/templates/otp.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <style>
+        .otp-input {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Verify OTP</h1>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="otp">Enter OTP:</label><br>
+        <input type="text" name="otp1" class="otp-input" maxlength="1" required>
+        <input type="text" name="otp2" class="otp-input" maxlength="1" required>
+        <input type="text" name="otp3" class="otp-input" maxlength="1" required>
+        <input type="text" name="otp4" class="otp-input" maxlength="1" required>
+        <input type="text" name="otp5" class="otp-input" maxlength="1" required>
+        <input type="text" name="otp6" class="otp-input" maxlength="1" required><br>
+        
+        <button type="submit">Verify OTP</button>
+    </form>
+
+    <script>
+        // Optional: Automatically focus on the next input after entering a digit
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

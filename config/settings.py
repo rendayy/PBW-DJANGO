@@ -23,6 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--#xj$u3osx5@@9$@g^!+kpc_ddquc60_p12@r#&c5r(6wdkv%&'
 
+# Email & Code for OTP
+EMAIL_ADDRESS = 'zidankusumafirdaus26@gmail.com'
+EMAIL_PASSWORD = 'mnsw lkhm gyqz uhpp'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
