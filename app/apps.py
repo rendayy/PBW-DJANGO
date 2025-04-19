@@ -13,3 +13,5 @@ class AppConfig(AppConfig):
             print("✅ Berhasil terhubung ke database:", connection.settings_dict['NAME'])
         except OperationalError:
             print("❌ Gagal terhubung ke database")
+            
+        import app.signals
