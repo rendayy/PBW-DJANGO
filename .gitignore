@@ -3,4 +3,8 @@ __pycache__/
 *.pyc
 *.sqlite3
 .env
+env/
+.gitignore
+uploads/
+migrations/
 pabw.db
