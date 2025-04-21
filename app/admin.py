@@ -26,6 +26,8 @@ admin.site.register(User, CustomUserAdmin)
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'role')
+from .models import Create
+
 
 @admin.register(Create)
 class CreateAdmin(admin.ModelAdmin):

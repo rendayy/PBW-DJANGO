@@ -5,15 +5,6 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 
 # Create your models here.
-class Profile(models.Model):
-    ROLE_CHOICES = [
-        ('admin', 'Admin'),
-        ('staff', 'Staff'), 
-        ('user', 'User'),
-    ]
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-    
 class Create(models.Model):
     STATUS_CHOICES = (
         ('p', 'Pending'),
