@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Home</title></head>
+<body>
+  <h2>Selamat datang, {{ user.username }}</h2>
+  <p>Status: 
+    {% if user.is_superuser %}
+      Superuser
+    {% elif user.is_staff %}
+      Admin (Staff)
+    {% else %}
+      User Biasa
+    {% endif %}
+  </p>
+  <a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>
