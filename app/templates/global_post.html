@@ -49,6 +49,7 @@
             <p><strong>Kategori:</strong> {{ gambar.kategori }}</p>
             <p>{{ gambar.deskripsi }}</p>
             <p><em>Diunggah pada: {{ gambar.tanggal_upload }}</em></p>
+            <a href="{{ gambar.gambar.url }}" class="download-button" download>Unduh Gambar</a>
         </div>
     {% empty %}
         <p>Belum ada gambar yang disetujui.</p>
