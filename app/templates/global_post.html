@@ -1,15 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Galeri Global</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        @media (min-width: 600px) {
+            .gallery-item {
+                max-width: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Galeri Gambar (Approved)</h1>
+    <h1>🌍 Galeri Gambar yang Disetujui</h1>
+    
     {% for gambar in gambar_list %}
-        <div style="margin-bottom: 20px;">
+        <div class="gallery-item">
             <h3>{{ gambar.judul }}</h3>
-            <p><strong>Diposting oleh:</strong> {{ gambar.user.username }}</p> <!-- Tambahan -->
-            <img src="{{ gambar.gambar.url }}" width="300" />
+            <p><strong>Diposting oleh:</strong> {{ gambar.user.username }}</p>
+
+            {% if gambar.thumbnail %}
+                <img src="{{ gambar.thumbnail.url }}" alt="{{ gambar.judul }}" loading="lazy">
+            {% else %}
+                <img src="{{ gambar.gambar.url }}" alt="{{ gambar.judul }}" loading="lazy">
+            {% endif %}
+
             <p><strong>Kategori:</strong> {{ gambar.kategori }}</p>
             <p>{{ gambar.deskripsi }}</p>
             <p><em>Diunggah pada: {{ gambar.tanggal_upload }}</em></p>
