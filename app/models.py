@@ -6,6 +6,9 @@ from django.core.files.base import ContentFile
 
 # Create your models here.
 class Create(models.Model):
+    class Meta:
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
     STATUS_CHOICES = (
         ('p', 'Pending'),
         ('a', 'Approved'),

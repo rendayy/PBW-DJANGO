@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --blue:#3579f6;
+    --orange:#DC552C;
+}
+
+.brand-link .brand-text{
+    font-weight: bold;
+    font-family: 'poppins';
+    color: #f5f5f5 !important;
+    font-weight: 500 !important;
+}
+
+.info {
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+    font-family: 'poppins';
+}
+
+.m-0{
+    font-family: 'poppins';
+    font-size: 1rem;
+}
+
+
+/* Card modul (container model-model per app) */
+.dashboard .module {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+    transition: 0.3s;
+}
+
+.dashboard .module:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Link model (Groups, Users, Posts) */
+.dashboard .module th a {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.image{
+    display: none !important;
+}
+.dashboard .module th a:hover {
+    text-decoration: underline;
+}
+
+/* Tombol Add & Change */
+.dashboard .object-tools a {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-left: 5px;
+}
+
+.dashboard .object-tools a.addlink {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+}
+
+.dashboard .object-tools a.changelink {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+}
+
+/* Hover efek untuk tombol */
+.dashboard .object-tools a:hover {
+    opacity: 0.9;
+}
+
+.btn.btn-xs.btn-outline-success.addlink {
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    margin-right:10px ;
+}
+
+.btn.btn-xs.btn-outline-success.addlink:hover{
+    background-color: var(--orange);
+    color: white;
+}
+
+.btn.btn-xs.btn-info.changelink {
+    background-color: var(--blue) !important;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    margin-right:10px ;
+}
+
+.btn.btn-outline-success.float-right{
+    border: 1px solid var(--orange);
+    color: var(--orange);
+}
+
+.btn.btn-outline-success.float-right:hover{
+    border: 1px solid var(--orange);
+    background-color: var(--orange);
+    color: white;
+}
+
+.float-right.d-none.d-sm-inline {
+    display: none !important;
+}
+
+.fas.fa-plus-circle.bg-success.text-xs{
+    background-color: var(--blue) !important;
+}
+
+h1.h4 {
+    font-size: 1.7rem !important;
+    font-family: "poppins";
+    color: var(--orange);
+    border-right: 2px solid #0d6efd;
+    font-weight: 600 !important;
+}
