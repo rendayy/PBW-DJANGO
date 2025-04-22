@@ -122,6 +122,78 @@ h1.h4 {
     font-size: 1.7rem !important;
     font-family: "poppins";
     color: var(--orange);
-    border-right: 2px solid #0d6efd;
+    border-right: 2px solid var(--orange);
     font-weight: 600 !important;
+}
+
+fieldset.module {
+    border: none;
+    background-color: #ff1010 !important;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    height: 2.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+}
+
+.form-row label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.help {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+input[type="submit"],
+button.default {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-bottom: 0;
+}
+
+input[type="submit"]:hover,
+button.default:hover {
+    background-color: #0b50b8 ;
+}
+
+.btn.btn-outline-success.form-control{
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.form-group{
+    margin-bottom: 1rem !important;
+}
+
+.btn.btn-danger.form-control{
+    height: 38px !important;
+    border-radius: 8px;
 }
