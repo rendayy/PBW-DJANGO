@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/400.css' %}">
+  <title>400 Bad Request</title>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-illustration"></div>
+    <h1 class="error-title">Bad Request</h1>
+    <p class="error-message">
+      The server cannot process the request due to something that is perceived to be a client error.
+    </p>
+    <div class="error-details">
+      <strong>Error 400:</strong> Your browser sent a request that this server could not understand. The request might contain invalid syntax or missing parameters.
+    </div>
+    <div class="actions">
+      <a href="{% url 'register' %}" class="btn">Back to Home</a>
+      <button onclick="history.back()" class="btn btn-outline">Go Back</button>
+    </div>
+  </div>
+</body>
+</html>
