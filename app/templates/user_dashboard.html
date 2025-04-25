@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>User Dashboard</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Selamat datang, {{ request.user.username }}!</h2>
     <p>Ini adalah dashboard untuk user biasa.</p>
     <a href="{% url 'logout' %}">Logout</a>
-</body>
+    {% block content %}
+    <div class="dashboard-container">
+      <h1>Dashboard Pengguna</h1>
+
+      <!-- Tombol Navigasi -->
+      <div class="navigation-buttons">
+        <a href="{% url 'upload' %}" class="btn btn-primary"> Upload Konten </a>
+
+        <p>
+          <a href="{% url 'gallery' %}" class="btn btn-secondary">
+            Lihat Global Post
+          </a>
+        </p>
+      </div>
+
+      <!-- Konten dashboard lainnya -->
+      <div class="dashboard-content">
+        <!-- ... -->
+      </div>
+    </div>
+    {% endblock %}
+  </body>
 </html>
