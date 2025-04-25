@@ -104,7 +104,7 @@ def verify_otp(request):
                 login(request, user)
                 
                 messages.success(request, "Registration successful!")
-                return redirect('home')
+                return redirect('login')
                 
             except IntegrityError:
                 messages.error(request, "Username already exists")
@@ -118,9 +118,6 @@ def verify_otp(request):
 
 # Login
 def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -132,20 +129,20 @@ def login_view(request):
                 return redirect('/admin/')
             if user.is_staff:
                 return redirect('/admin/')
-            return redirect('home')
+            return redirect('user_dashboard')
         else:
             return render(request, 'login.html', {'error': 'Username atau password salah'})
     return render(request, 'login.html')
 
 @login_required
 def admin_dashboard(request):
-    if not request.user.groups.filter(name='aadmin').exists():  # Modifikasi ini
+    if not request.user.groups.filter(name='admin').exists():  # Modifikasi ini
         return redirect('access_denied')
     return render(request, 'admin_dashboard.html')
 
 @login_required
 def staff_dashboard(request):
-    if not request.user.groups.filter(name='sstaff').exists():  # Modifikasi ini
+    if not request.user.groups.filter(name='staff').exists():  # Modifikasi ini
         return redirect('access_denied')
     return render(request, 'staff_dashboard.html')
 
@@ -156,18 +153,6 @@ def user_dashboard(request):
         return redirect('access_denied')
     return render(request, 'user_dashboard.html')
 
-@login_required
-def home(request):
-    """
-    Home page view that shows different content based on user role
-    """
-    context = {
-        'user': request.user,
-        'is_admin': request.user.groups.filter(name='admin').exists(),
-        'is_staff': request.user.groups.filter(name='staff').exists(),
-        'is_regular_user': request.user.groups.filter(name='user').exists()
-    }
-    return render(request, 'home.html', context)
 
 # Logout
 def logout_view(request):
