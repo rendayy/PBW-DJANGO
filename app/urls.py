@@ -3,9 +3,10 @@ from . import login_register
 from .create import upload_view
 from .global_post import global_gallery
 from app.login_register import home 
+from .leanding_page import landing_page
 
 urlpatterns = [
-    path('', login_register.home, name='home'),
+    path('', landing_page, name='landing_page'),
     path('register/', login_register.register_view, name='register'),
     path('login/', login_register.login_view, name='login'),
     path('admin/', login_register.admin_dashboard, name='admin_dashboard'),
