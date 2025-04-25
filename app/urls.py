@@ -2,7 +2,6 @@ from django.urls import path
 from . import login_register
 from .create import upload_view
 from .global_post import global_gallery
-from app.login_register import home
 from .leanding_page import landing_page
 
 urlpatterns = [
