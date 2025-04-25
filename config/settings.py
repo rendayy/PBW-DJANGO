@@ -77,6 +77,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+LOGIN_URL = '/login/'  # URL halaman login Anda
+LOGIN_REDIRECT_URL = 'home'  # Redirect setelah login sukses
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

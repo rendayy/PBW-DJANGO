@@ -2,7 +2,7 @@ from django.urls import path
 from . import login_register
 from .create import upload_view
 from .global_post import global_gallery
-from app.login_register import home 
+from app.login_register import home
 from .leanding_page import landing_page
 
 urlpatterns = [
@@ -13,7 +13,7 @@ urlpatterns = [
     path('staff/', login_register.staff_dashboard, name='staff_dashboard'),
     path('user/', login_register.user_dashboard, name='user_dashboard'),
     path('logout/', login_register.logout_view, name='logout'),
-    path('upload/',upload_view, name='upload'),
+    path('upload/', upload_view, name='upload'),
     path('otp/', login_register.verify_otp, name='otp'),
     path('gallery/', global_gallery, name='gallery'),
 ]
