@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIM PABW</title>
+    <link rel="stylesheet" href="{% static 'css/leandingPage.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">TIM <span class="highlight">DJANGO</span></a>
+            <button class="hamburger" id="hamburger-btn">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#team">Tim</a></li>
+                <li><a href="#mulai">Mulai</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="divider"></div>
+    
+    <section class="hero">
+        <div id="particles-js"></div>
+        <div class="container">
+            <h1>TIM DJANGO <span class="highlight">KAMI</span></h1>
+            <p>Kami adalah sekelompok mahasiswa dengan semangat kolaborasi dan keahlian di bidang masing-masing, siap menyelesaikan proyek ini secara maksimal.</p>
+        </div>
+    </section>
+
+    <section class="team-section" id="team">
+        <div class="container">
+            <h2 class="section-title">KENALI TIM KAMI</h2>
+            <div class="team-grid" id="team-grid">
+                <!-- Tim akan dimasukkan secara dinamis dengan JavaScript -->
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section" id="mulai">
+        <div class="container">
+            <div class="cta-text">
+                <h2>
+                    <span class="warna1">Temukan.</span>
+                    <span class="warna2">Simpan.</span>
+                    <span class="warna3">Bagikan.</span>
+                </h2>
+                <p>Temukan inspirasi tanpa batas. Bergabunglah sekarang dan mulai buat koleksi ide terbaikmu dalam satu genggaman.</p>
+            </div>
+            <a href="{% url 'login' %}" class="cta-btn" >Masuk Sekarang</a>
+        </div>
+    </section>
+
+    <div class="modal" id="team-modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal">&times;</button>
+            <div class="modal-header">
+                <img src="/api/placeholder/120/120" alt="Foto Anggota Tim" class="modal-img" id="modal-img">
+                <div>
+                    <h3 class="modal-name" id="modal-name">Nama Anggota</h3>
+                    <p class="modal-title" id="modal-title">Posisi</p>
+                </div>
+            </div>
+            <div class="modal-bio" id="modal-bio">
+                <!-- Bio dimasukkan secara dinamis -->
+            </div>
+            <div class="modal-contact">
+                <div class="contact-item">
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    <span id="modal-email">email@example.com</span>
+                </div>
+                <div class="contact-item" id="Ig-section">
+                    <span class="contact-icon"><i class="fab fa-instagram"></i></span>
+                    <a href="https://instagram.com/username_ig" target="_blank" id="modal-IgUsername">@username_ig</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <h3>TIM <span class="highlight">DJANGO</span></h3>
+            <ul class="footer-links">
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#team">Tim</a></li>
+                <li><a href="#">Kontak</a></li>
+            </ul>
+            <p class="copyright">&copy; 2025 TIM DJANGO. Semua Hak Dilindungi.</p>
+        </div>
+    </footer>
+    <script src="{% static 'js/leandingPage.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+</body> 
+</html>

@@ -23,6 +23,15 @@
     font-size: 1rem;
 }
 
+.timeline-header.no-border {
+    display: inline-block !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    letter-spacing: normal !important;
+    max-width: 100% !important;
+  }
+  
 
 /* Card modul (container model-model per app) */
 .dashboard .module {
