@@ -158,3 +158,7 @@ def user_dashboard(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def custom_admin_logout(request):
+    logout(request)
+    return redirect('login')  # Ganti dengan nama URL login Anda
