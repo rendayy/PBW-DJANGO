@@ -3,6 +3,10 @@ from . import login_register
 from .create import upload_view
 from .global_post import global_gallery
 from .leanding_page import landing_page
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.static import serve
+from django.urls import re_path
 
 urlpatterns = [
     path('', landing_page, name='landing_page'),
@@ -16,3 +20,10 @@ urlpatterns = [
     path('otp/', login_register.verify_otp, name='otp'),
     path('gallery/', global_gallery, name='gallery'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += [
+        re_path(r'^uploads/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    ]

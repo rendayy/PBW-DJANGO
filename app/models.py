@@ -1,22 +1,24 @@
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+import os
 
-# Create your models here.
 class Create(models.Model):
     class Meta:
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+
     STATUS_CHOICES = (
         ('p', 'Pending'),
         ('a', 'Approved'),
         ('r', 'Rejected'),
     )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    gambar = models.ImageField(upload_to='uploads/')
-    thumbnail = models.ImageField(upload_to='uploads/thumbnails/', blank=True, null=True)
+    gambar = models.ImageField(upload_to='uploads/')  # gambar asli
+    thumbnail = models.ImageField(upload_to='uploads/thumbnails/', blank=True, null=True)  # thumbnail
     kategori = models.CharField(max_length=100)
     deskripsi = models.TextField(blank=True)
     judul = models.CharField(max_length=200)
@@ -28,16 +30,18 @@ class Create(models.Model):
 
         if self.gambar and not self.thumbnail:
             img = Image.open(self.gambar)
-            img = img.convert('RGB')  # pastikan dalam mode RGB
-            img.thumbnail((400, 400))  # max width/height
+            img = img.convert('RGB')  
+            img.thumbnail((400, 400))  
 
             thumb_io = BytesIO()
-            img.save(thumb_io, format='jpeg', quality=70)  # kompresi di sini
+            img.save(thumb_io, format='JPEG', quality=70)
 
-            thumb_name = f"thumb_{self.gambar.name.split('/')[-1]}"
-            self.thumbnail.save(thumb_name, ContentFile(thumb_io.getvalue()), save=False)
+            original_filename = os.path.basename(self.gambar.name) 
+            thumb_filename = f"thumb_{original_filename}"
 
-            super().save(update_fields=['thumbnail'])  
+            self.thumbnail.save(f"thumbnails/{thumb_filename}", ContentFile(thumb_io.getvalue()), save=False)
+
+            super().save(update_fields=['thumbnail'])
 
     def __str__(self):
         return self.judul
