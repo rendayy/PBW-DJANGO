@@ -30,11 +30,43 @@
                 max-width: 500px;
             }
         }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .kategori-list {
+            margin: 20px 0;
+        }
+
+        .kategori-list a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: blue;
+        }
+
+        .kategori-list a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <h1>🌍 Galeri Gambar yang Disetujui</h1>
     
+    <form class="search-form" method="get" action="">
+        <input type="text" name="search" placeholder="Cari berdasarkan judul..." value="{{ query }}">
+        <button type="submit">Cari</button>
+    </form>
+
+    <div class="kategori-list">
+        <strong>Kategori:</strong>
+        {% for kategori in kategori_list %}
+            <a href="?kategori={{ kategori }}&search={{ query }}">{{ kategori }}</a>
+        {% empty %}
+            <span>Tidak ada kategori tersedia.</span>
+        {% endfor %}
+    </div>
+
     {% for gambar in gambar_list %}
         <div class="gallery-item">
             <h3>{{ gambar.judul }}</h3>
