@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500 Server Error</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/500.css' %}">
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">
+      <div class="server-icon">
+        <div class="server-lines"></div>
+        <div class="server-base">
+          <div class="server-light"></div>
+          <div class="server-slot slot-1"></div>
+          <div class="server-slot slot-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="error-code">Error 500</div>
+    <h1 class="error-title">Internal Server Error</h1>
+    <p class="error-message">
+      We're experiencing some technical difficulties on our end. Our team has been notified and is working to resolve this issue.
+    </p>
+    <div class="error-details">
+      <strong>What happened?</strong> The server encountered an unexpected condition that prevented it from fulfilling the request. This is not your fault.
+    </div>
+    <div class="actions">
+      <a href="{% url 'register' %}" class="btn">Back to Home</a>
+      <button onclick="window.location.reload()" class="btn btn-outline">Try Again</button>
+    </div>
+    <div class="support-link">
+      <p>If the problem persists, please contact <a href="mailto:support@example.com">support</a></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #FFFFFF;
+    color: #6B7292;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .error-container {
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0 5px 25px rgba(107, 114, 146, 0.1);
+    border: 1px solid #D4E1DF;
+  }
+
+  .error-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    background: linear-gradient(135deg, #90B1C1 0%, #718CA8 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 60px;
+    font-weight: 300;
+  }
+
+  .error-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #718CA8;
+    margin-bottom: 15px;
+    letter-spacing: -0.5px;
+  }
+
+  .error-message {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6B7292;
+    margin-bottom: 30px;
+    padding: 0 20px;
+  }
+
+  .error-code {
+    display: inline-block;
+    background-color: #D4E1DF;
+    color: #718CA8;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #90B1C1 0%, #718CA8 100%);
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(113, 140, 168, 0.2);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(113, 140, 168, 0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #718CA8;
+    border: 1px solid #90B1C1;
+    margin-left: 10px;
+    box-shadow: none;
+  }
+
+  .btn-outline:hover {
+    background-color: #D4E1DF;
+    box-shadow: none;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    .error-title {
+      font-size: 24px;
+    }
+    
+    .error-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 50px;
+    }
+    
+    .actions {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .btn-outline {
+      margin-left: 0;
+    }
+  }
