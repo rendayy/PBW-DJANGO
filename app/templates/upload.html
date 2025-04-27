@@ -8,7 +8,8 @@
     <style>
         :root {
             --sidebar-width: 80px;
-            --primary-color: #718CA8;
+            --primary-color: #3579f6;
+            --hover-blue:#1d5cd2;
             --bg-color: #FFFFFF;
             --secondary-color: #90B1C1;
             --accent-color: #6B7292;
@@ -78,6 +79,12 @@
         .nav-item.active {
             background-color: var(--gray-light);
             border-radius: 8px;
+            color: var(--primary-color);
+        }
+
+        .nav-item.active,
+        .nav-item.active i {
+            color: var(--primary-color);
         }
 
         .nav-item i {
@@ -163,7 +170,7 @@
         }
 
         .upload-area {
-            background-color: var(--light-color);
+            background-color: var(--gray-light);
             padding: 40px;
             border-radius: 15px;
             text-align: center;
@@ -175,12 +182,12 @@
 
         .upload-area:hover {
             border-color: var(--primary-color);
-            background-color: rgba(212, 225, 223, 0.7);
+            background-color: rgba(173, 215, 255,0.2);
         }
 
         .upload-icon {
             font-size: 45px;
-            color: var(--secondary-color);
+            color: #737373;
             margin-bottom: 15px;
         }
 
@@ -192,7 +199,7 @@
         }
 
         .upload-format {
-            color: var(--secondary-color);
+            color: #737373;
             font-size: 14px;
         }
 
@@ -245,7 +252,7 @@
         }
 
         button:hover {
-            background-color: var(--accent-color);
+            background-color: var(--hover-blue);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
