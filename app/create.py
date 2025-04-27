@@ -12,7 +12,7 @@ def upload_view(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-            return redirect('gallery')  # ← ubah sesuai nama URL tujuan
+            return redirect('user_dashboard')  # ← ubah sesuai nama URL tujuan
     else:
         form = CreateForm()
     return render(request, 'upload.html', {'form': form})

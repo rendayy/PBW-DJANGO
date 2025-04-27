@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Postingan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .edit-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .current-image {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .current-image img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .form-check {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .form-check-input {
+            width: auto;
+            margin-right: 10px;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="edit-container">
+        <h2>Edit Postingan</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Current Image Display -->
+            {% if form.instance.gambar %}
+            <div class="current-image">
+                <img src="{{ form.instance.gambar.url }}" alt="Current Image">
+                <div class="form-check">
+                    <input type="checkbox" name="gambar-clear" id="gambar-clear" class="form-check-input">
+                    <label for="gambar-clear" class="form-check-label">Hapus gambar saat ini</label>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- New Image Upload -->
+            <div class="form-group">
+                <label for="id_gambar">
+                    {% if form.instance.gambar %}Ganti Gambar{% else %}Upload Gambar{% endif %}
+                </label>
+                <input type="file" name="gambar" id="id_gambar" class="form-control" accept="image/*">
+                {% if form.gambar.errors %}
+                    <div class="error-message">{{ form.gambar.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Title Field -->
+            <div class="form-group">
+                <label for="id_judul">Judul</label>
+                <input type="text" name="judul" id="id_judul" class="form-control" value="{{ form.judul.value|default_if_none:'' }}">
+                {% if form.judul.errors %}
+                    <div class="error-message">{{ form.judul.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Category Field -->
+            <div class="form-group">
+                <label for="id_kategori">Kategori</label>
+                <input type="text" name="kategori" id="id_kategori" class="form-control" value="{{ form.kategori.value|default_if_none:'' }}">
+                {% if form.kategori.errors %}
+                    <div class="error-message">{{ form.kategori.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <!-- Description Field -->
+            <div class="form-group">
+                <label for="id_deskripsi">Deskripsi</label>
+                <textarea name="deskripsi" id="id_deskripsi" class="form-control">{{ form.deskripsi.value|default_if_none:'' }}</textarea>
+                {% if form.deskripsi.errors %}
+                    <div class="error-message">{{ form.deskripsi.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Batal</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Preview image before upload
+        document.getElementById('id_gambar').addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var preview = document.createElement('img');
+                    preview.src = e.target.result;
+                    preview.style.maxWidth = '200px';
+                    preview.style.marginTop = '10px';
+                    
+                    var container = document.querySelector('.current-image');
+                    if (container) {
+                        container.insertBefore(preview, container.firstChild);
+                    } else {
+                        var newContainer = document.createElement('div');
+                        newContainer.className = 'current-image';
+                        newContainer.appendChild(preview);
+                        document.querySelector('form').insertBefore(newContainer, document.querySelector('.form-group'));
+                    }
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    </script>
+</body>
+</html>
