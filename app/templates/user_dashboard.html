@@ -1,174 +1,724 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>User Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Global</title>
+    <!-- Add Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        :root {
+            --sidebar-width: 80px;
+            --primary-color: #3579f6;
+            --hover-blue:#1d5cd2;
+            --bg-color: #fff;
+            --text-color: #111;
+            --border-color: #efefef;
+            --gray-light: #f0f0f0;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 0;
+            margin: 0;
+            
         }
-        .navigation-buttons {
-            margin: 20px 0;
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--bg-color);
+            border-right: 1px solid var(--border-color);
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 100;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 4px;
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: white;
             font-weight: bold;
         }
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-        .post-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            background: white;
-        }
-        .post-header {
+
+        .nav-item {
+            width: 100%;
+            height: 48px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 8px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            background-color: var(--gray-light);
+            border-radius: 8px;
+        }
+
+        .nav-item.active,
+        .nav-item.active i,
+        .nav-item.active span {
+            color: var(--primary-color);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        /* Add tooltip */
+        .nav-item .tooltip {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 101;
+            margin-left: 10px;
+        }
+
+        .nav-item:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Header - Centered Search Bar */
+
+        .tabs {
+            display: flex;
+            margin-left: var(--sidebar-width);
+            padding: 16px;
+            background-color: var(--bg-color);
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            z-index: 98;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            margin-right: 24px;
+            font-weight: 200;
+            cursor: pointer;
+            padding-bottom: 8px;
+            font-family: 'poppins'; /* Tampilan font modern */
+            font-size: 16px; /* Sesuaikan ukuran font bila perlu */
+            color: var(--text-color); /* Pastikan menggunakan variabel warna yang konsisten */
+            text-decoration: none; /* Hilangkan underline default link */
+            transition: color 0.3s ease; /* Efek transisi halus pada hover */
+        }
+
+        .tab:hover {
+            color: var(--hover-color);
+        }
+
+        .tab.active {
+            border-bottom: 4px solid var(--text-color);
+        }
+        /* Content area */
+        .content {
+            margin-left: var(--sidebar-width);
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Pinterest-style Masonry Layout */
+        .masonry-grid {
+            width: calc(100% - 40px);
+            margin: 20px auto;
+            columns: 6;
+            column-gap: 20px;
+        }
+
+        .pin {
+            width: 100%;
+            margin-bottom: 20px;
+            break-inside: avoid;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            box-shadow: var(--shadow);
+        }
+
+        .pin img {
+            width: 100%;
+            display: block;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .pin-info {
+            padding: 12px;
+        }
+
+        .pin-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pin-user {
+            font-size: 12px;
+            color: #666;
             margin-bottom: 10px;
         }
-        .status-badge {
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8em;
+
+        /* Download Button */
+        .download-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
+            margin-top: 8px;
+            transition: background-color 0.2s;
         }
+
+        .download-button:hover {
+            background-color: var(--hover-blue);
+        }
+
+        /* Empty state */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px; 
+            margin: 0 auto;
+            max-width: 500px;
+            height: calc(100vh - 200px);
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            color: #CCCCCC;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 24px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .empty-state-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .empty-state-button:hover {
+            background-color: var(--primary-color);
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 24px 15px;
+            margin-top: 100px;
+        }
+        
+        /* Card Container */
+        .post-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Status Ribbons */
+        .status-ribbon {
+            position: absolute;
+            top: 12px;
+            right: -35px;
+            transform: rotate(45deg);
+            width: 150px;
+            text-align: center;
+            padding: 7px 0;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: white;
+            z-index: 5;
+        }
+        
         .status-pending {
-            background-color: #fff3cd;
-            color: #856404;
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+            box-shadow: 0 2px 4px rgba(255, 179, 71, 0.3);
         }
+        
         .status-approved {
-            background-color: #d4edda;
-            color: #155724;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            box-shadow: 0 2px 4px rgba(67, 206, 162, 0.3);
         }
+        
         .status-rejected {
-            background-color: #f8d7da;
-            color: #721c24;
+            background: linear-gradient(135deg, #ff5f6d, #ffc371);
+            box-shadow: 0 2px 4px rgba(255, 95, 109, 0.3);
         }
-        .post-thumbnail {
-            max-width: 200px;
-            height: auto;
-            margin-top: 10px;
+        
+        /* Image Container */
+        .post-image-container {
+            height: 180px;
+            overflow: hidden;
         }
+        
+        .post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        
+        .post-card:hover .post-image {
+            transform: scale(1.08);
+        }
+        
+        /* Content Section */
+        .post-content {
+            padding: 20px;
+            flex-grow: 1;
+        }
+        
+        .post-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .post-category {
+            margin-bottom: 15px;
+        }
+        
+        .category-label {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(53, 121, 246, 0.1);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .category-label i {
+            margin-right: 6px;
+            font-size: 11px;
+        }
+        
+        /* Post Meta Info */
+        .post-meta {
+            display: flex;
+            align-items: center;
+            color: #71717a;
+            font-size: 13px;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .upload-date, .upload-time {
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-meta i {
+            margin-right: 5px;
+            color: #9ca3af;
+        }
+        
+        /* Rejection Message Styling */
+        .rejection-message {
+            background-color: #fff5f5;
+            border-left: 4px solid #f56565;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+        
+        .rejection-title {
+            display: flex;
+            align-items: center;
+            color: #e53e3e;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+        
+        .rejection-title i {
+            margin-right: 8px;
+        }
+        
+        .rejection-text {
+            color: #7f1d1d;
+            font-size: 13px;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Action Buttons */
         .post-actions {
-          margin-top: 15px;
-          display: flex;
-          gap: 10px;
-      }
-      
-      .btn-warning {
-          background-color: #ffc107;
-          color: #000;
-          border: none;
-      }
-      
-      .btn-danger {
-          background-color: #dc3545;
-          color: white;
-          border: none;
-      }
-      
-      .btn-warning:hover, .btn-danger:hover {
-          opacity: 0.8;
-      }
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+        
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .action-button i {
+            margin-right: 6px;
+        }
+        
+        .edit-button {
+            color: #ffffff;
+            background-color: var(--primary-color);
+        }
+        
+        .edit-button:hover {
+            background-color: var(--hover-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(53, 121, 246, 0.2);
+        }
+        
+        .delete-button {
+            color: #ffffff;
+            background-color: #ef4444;
+        }
+        
+        .delete-button:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2);
+        }
+        
+        .delete-form {
+            margin: 0;
+        }
+  
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .masonry-grid {
+                columns: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masonry-grid {
+                columns: 2;
+            }
+
+            .search-bar {
+                max-width: 300px;
+            }
+            
+            .empty-state h3 {
+                font-size: 20px;
+            }
+            
+            .empty-state p {
+                font-size: 14px;
+            }
+            
+            .nav-item .tooltip {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            :root {
+                --sidebar-width: 60px;
+            }
+
+            .header {
+                padding: 0 8px;
+            }
+
+            .search-bar {
+                max-width: 200px;
+                margin: 0 8px;
+            }
+
+            .search-bar input {
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 140px 8px 8px;
+            }
+
+            .masonry-grid {
+                columns: 1;
+                column-gap: 10px;
+                width: calc(100% - 20px);
+            }
+
+            .tab {
+                font-size: 14px;
+                margin-right: 16px;
+            }
+            
+            .empty-state {
+                padding: 20px;
+            }
+            
+            .empty-state-icon {
+                font-size: 48px;
+            }
+            
+            .empty-state h3 {
+                font-size: 18px;
+            }
+            
+            .empty-state p {
+                font-size: 13px;
+            }
+            
+            .empty-state-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <h2>Selamat datang, {{ request.user.username }}!</h2>
-        <p>Ini adalah dashboard untuk user biasa.</p>
-        <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
-
-        <!-- Tombol Navigasi -->
-        <div class="navigation-buttons">
-            <a href="{% url 'upload' %}" class="btn btn-primary">Upload Konten</a>
-            <a href="{% url 'gallery' %}" class="btn btn-secondary">Lihat Global Post</a>
-        </div>
-
-        <!-- Statistik Postingan -->
-        <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px;">
-            <h3>Statistik Postingan Anda</h3>
-            <p>Total: {{ total_posts }} | Disetujui: {{ approved_posts }} | Pending: {{ pending_posts }} | Ditolak: {{ rejected_posts }}</p>
-        </div>
-
-        <!-- Daftar Postingan User -->
-        <h3>Postingan Anda</h3>
-        <!-- ... (kode sebelumnya tetap sama) ... -->
-
-{% if user_posts %}
-{% for post in user_posts %}
-<div class="post-card">
-    <div class="post-header">
-        <h4>{{ post.judul }}</h4>
-        <span class="status-badge status-{{ post.status }}">
-            {% if post.status == 'p' %}Pending
-            {% elif post.status == 'a' %}Disetujui
-            {% elif post.status == 'r' %}Ditolak
-            {% endif %}
-        </span>
-    </div>
-    <p><strong>Kategori:</strong> {{ post.kategori }}</p>
-    <p>{{ post.deskripsi }}</p>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">P</div>
     
-    {% if post.thumbnail %}
-    <img src="{{ post.thumbnail.url }}" class="post-thumbnail" alt="Thumbnail">
-    {% endif %}
-    
-    <p><small>Tanggal Upload: {{ post.tanggal_upload|date:"d M Y H:i" }}</small></p>
-    
-    {% if post.status == 'r' and post.rejection_reason %}
-    <div style="margin-top: 10px; padding: 10px; background: #fff3f3; border-left: 3px solid #ff6b6b;">
-        <strong>Alasan Penolakan:</strong> {{ post.rejection_reason }}
-    </div>
-    {% endif %}
-
-    <!-- TAMBAHKAN TOMBOL EDIT DAN DELETE DI SINI -->
-    <div class="post-actions" style="margin-top: 15px;">
-        <!-- Tombol Edit -->
-        <a href="{% url 'edit_post' post.id %}" class="btn btn-warning" style="padding: 5px 10px; font-size: 14px;">
-            Edit
+        <a href="{% url 'user_dashboard' %}" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span class="tooltip">Beranda</span>
         </a>
-        
-        <!-- Tombol Delete -->
-        <form method="post" action="{% url 'delete_post' post.id %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger" 
-                style="padding: 5px 10px; font-size: 14px;"
-                onclick="return confirm('Yakin ingin menghapus postingan ini?')">
-                Hapus
-            </button>
-        </form>
+    
+        <a href="{% url 'gallery' %}" class="nav-item ">
+            <i class="fas fa-globe"></i>
+            <span class="tooltip">Eksplore</span>
+        </a>
+    
+        <a href="{% url 'upload' %}" class="nav-item ">
+            <i class="fas fa-plus-circle"></i>
+            <span class="tooltip">Buat Postingan</span>
+        </a>
     </div>
-</div>
-{% endfor %}
-{% else %}
-<p>Anda belum memiliki postingan.</p>
-{% endif %}
 
-<!-- ... (kode setelahnya tetap sama) ... -->
+    <!-- Content Area -->
+    <div class="content">
+        {% if user_posts %}
+        <div class="masonry-grid">
+            {% for post in user_posts %}
+            <!-- Post Card Item -->
+            <div class="pin">
+              <!-- Status Badge -->
+              <div class="status-ribbon status-{% if post.status == 'p' %}pending{% elif post.status == 'a' %}approved{% elif post.status == 'r' %}rejected{% endif %}">
+                {% if post.status == 'p' %}Pending
+                {% elif post.status == 'a' %}Disetujui
+                {% elif post.status == 'r' %}Ditolak
+                {% endif %}
+              </div>
+              
+              <!-- Card Image -->
+              {% if post.thumbnail %}
+              <div class="post-image-container">
+                <img src="{{ post.thumbnail.url }}" class="post-image" alt="{{ post.judul }}">
+              </div>
+              {% endif %}
+              
+              <!-- Card Content -->
+              <div class="post-content">
+                <h3 class="post-title">{{ post.judul }}</h3>
+                <div class="post-category">
+                  <span class="category-label">
+                    <i class="fas fa-tag"></i> {{ post.kategori }}
+                  </span>
+                </div>
+                
+                <!-- Upload Info -->
+                <div class="post-meta">
+                  <span class="upload-date">
+                    <i class="far fa-calendar-alt"></i>
+                    {{ post.tanggal_upload|date:"d M Y" }}
+                  </span>
+                  <span class="upload-time">
+                    <i class="far fa-clock"></i>
+                    {{ post.tanggal_upload|date:"H:i" }}
+                  </span>
+                </div>
+                
+                <!-- Rejection Message (if applicable) -->
+                {% if post.status == 'r' and post.rejection_reason %}
+                <div class="rejection-message">
+                  <h4 class="rejection-title">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Alasan Penolakan:
+                  </h4>
+                  <p class="rejection-text">{{ post.rejection_reason }}</p>
+                </div>
+                {% endif %}
+              </div>
+              
+              <!-- Card Actions -->
+              <div class="post-actions">
+                <a href="{% url 'edit_post' post.id %}" class="action-button edit-button">
+                  <i class="fas fa-edit"></i>
+                  Edit
+                </a>
+                <form method="post" action="{% url 'delete_post' post.id %}" class="delete-form">
+                  {% csrf_token %}
+                  <button type="submit" class="action-button delete-button" 
+                         onclick="return confirm('Yakin ingin menghapus postingan ini?')">
+                    <i class="fas fa-trash-alt"></i>
+                    Hapus
+                  </button>
+                </form>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="far fa-images"></i>
+                </div>
+                <h3>Belum Ada Postingan</h3>
+                <p>Belum ada Postingan yang tersedia untuk ditampilkan saat ini. Gambar akan muncul di sini setelah disetujui oleh admin.</p>
+                <button class="empty-state-button">Kembali ke Beranda</button>
+            </div>
+        {% endif %}
     </div>
+
+    <script>
+        // Script to handle tab switching
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+        
+        // Lazy loading images
+        document.addEventListener("DOMContentLoaded", function() {
+            let lazyImages = [].slice.call(document.querySelectorAll("img[loading='lazy']"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImage.classList.add("lazy");
+                    lazyImageObserver.observe(lazyImage);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
