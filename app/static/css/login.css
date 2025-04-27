@@ -81,7 +81,7 @@ form input, form select, form textarea {
 form button[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: #7885a7;
+    background-color: #3579f6;
     color: white;
     border: none;
     border-radius: 8px;
@@ -93,7 +93,7 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #6a7896;
+    background-color: #1d5cd2;
 }
 
 .login-link {
