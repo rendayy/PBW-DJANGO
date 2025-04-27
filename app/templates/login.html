@@ -1,82 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .left {
-      width: 50%;
-      background: url("{% static 'image/begron.jpeg' %}") no-repeat center center/cover;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-    .right {
-      width: 50%;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-      padding: 20px;
-    }
-    h2 {
-      color: #5c6388;
-      margin-bottom: 20px;
-      text-decoration: underline;
-    }
-    input {
-      width: 300px;
-      padding: 15px;
-      margin: 10px 0;
-      border: none;
-      background: #d0dbe5;
-      border-radius: 15px;
-      font-weight: bold;
-    }
-    button {
-      width: 320px;
-      padding: 15px;
-      margin-top: 20px;
-      background-color: #7b88aa;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    p {
-      margin-top: 20px;
-      font-size: 14px;
-    }
-    a {
-      color: red;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}"> <!-- pastikan file css ada -->
 </head>
 <body>
-  <div class="left"></div>
-  <div class="right">
-    <h2>LOGIN</h2>
-    <input type="text" placeholder="Username" required>
-    <input type="password" placeholder="Password" required>
-    <button>LOGIN</button>
-    <p>Belum punya akun? <a href="#">Daftar disini</a></p>
-  </div>
+    <div class="container">
+        <div class="image-section">
+            <!-- Background image via CSS -->
+        </div>
+        <div class="form-section">
+            <div class="form-container">
+                <h2 class="login-title">LOGIN</h2>
+
+                {% if error %}
+                    <p class="error-message">{{ error }}</p>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <input type="text" name="username" placeholder="Enter your username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit">LOGIN</button>
+                </form>
+
+                <p class="register-link">Belum punya akun? <a href="{% url 'register' %}">Daftar disini</a></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

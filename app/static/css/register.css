@@ -1,0 +1,147 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        .image-section {
+            flex: 1;
+            background-image: url('/static/image/begron.jpeg'); /* Ganti path sesuai gambar */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .register-title {
+            color: #545871;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: underline;
+            letter-spacing: 1px;
+        }
+
+        /* Form styling */
+        form .form-group {
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: none; /* Tetap disembunyikan */
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #eef1f7;
+            font-size: 16px;
+        }
+
+        /* Error styling */
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        /* Submit button */
+        form button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #7885a7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #6a7896;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #545871;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        ::placeholder {
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .form-section {
+                order: 2;
+                padding: 15px;
+            }
+
+            .image-section {
+                order: 1;
+                min-height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 10px;
+            }
+
+            .register-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            form input, form select, form textarea {
+                padding: 12px;
+            }
+
+            form button[type="submit"] {
+                padding: 12px;
+            }
+        }

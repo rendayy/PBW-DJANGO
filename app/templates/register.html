@@ -1,87 +1,57 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Register</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
-      display: flex;
-      overflow: hidden;
-    }
-    .left {
-      width: 50%;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-    .right {
-      width: 50%;
-      background: url("{% static 'image/begron.jpeg' %}") no-repeat center center/cover;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-    }
-    h2 {
-      color: #5c6388;
-      font-size: 32px;
-      font-weight: bold;
-      text-decoration: underline;
-      margin-bottom: 30px;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 320px;
-    }
-    input {
-      padding: 15px;
-      margin-bottom: 15px;
-      border: none;
-      background: #c9d8e2;
-      border-radius: 15px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    button {
-      padding: 15px;
-      background-color: #7b88aa;
-      color: white;
-      border: none;
-      border-radius: 15px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
-  <div class="left">
-    <h2>REGISTER</h2>
-    <form method="POST">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">REGISTER</button>
-    </form>
-    {% if error %}
-      <div class="error">{{ error }}</div>
-    {% endif %}
-  </div>
-  <div class="right"></div>
+  <div class="container">
+    <div class="form-section">
+        <div class="form-container">
+            <h2 class="register-title">REGISTER</h2>
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="error-message">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="error-message">{{ form.password1.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="error-message">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit">REGISTER</button>
+            </form>
+            <p class="login-link">Sudah punya akun? <a href="{% url 'login' %}">Login di sini</a></p>
+        </div>
+    </div>
+    <div class="image-section">
+        <!-- Background image applied via CSS -->
+    </div>
+</div>
+
 </body>
 </html>
