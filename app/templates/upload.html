@@ -200,6 +200,11 @@
             margin-bottom: 25px;
         }
 
+        .upload-area.drag-over {
+            border-color: var(--primary-color);
+            background-color: rgba(212, 225, 223, 0.7);
+        }
+
         input[type="text"], textarea {
             width: 100%;
             padding: 15px;
@@ -298,7 +303,7 @@
                 {% csrf_token %}
                 
                 <h2>Upload File</h2>
-                <div class="upload-area">
+                <div class="upload-area" id="upload-area">
                     <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <div class="upload-text">Klik atau seret file disini</div>
                     <div class="upload-format">Format yang didukung JPG dan PNG</div>
@@ -330,15 +335,47 @@
     </div>
 
     <script>
+        // Get DOM elements
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-upload');
+        const uploadText = document.querySelector('.upload-text');
+    
         // Make the upload area clickable to trigger file input
-        document.querySelector('.upload-area').addEventListener('click', function() {
-            document.getElementById('file-upload').click();
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
         });
-        
+    
         // Display file name when selected
-        document.getElementById('file-upload').addEventListener('change', function() {
-            if(this.files[0]) {
-                document.querySelector('.upload-text').textContent = this.files[0].name;
+        fileInput.addEventListener('change', function() {
+            if (this.files[0]) {
+                uploadText.textContent = this.files[0].name;
+            }
+        });
+    
+        // Handle drag over event
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+    
+        // Handle drag leave event
+        uploadArea.addEventListener('dragleave', function() {
+            uploadArea.classList.remove('drag-over');
+        });
+    
+        // Handle drop event
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                // Set the files to the input
+                fileInput.files = files; 
+                uploadText.textContent = files[0].name; // Display the file name
+                
+                // Trigger the change event manually
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
             }
         });
     </script>
