@@ -81,8 +81,7 @@
         }
 
         .nav-item.active,
-        .nav-item.active i,
-        .nav-item.active span {
+        .nav-item.active i {
             color: var(--primary-color);
         }
 
@@ -524,6 +523,15 @@
             .nav-item .tooltip {
                 display: none;
             }
+            .post-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+                padding: 15px 10px;
+            }
+                
+            .post-actions {
+                padding: 0 15px 15px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -544,9 +552,6 @@
                 font-size: 14px;
             }
 
-            .content {
-                padding: 140px 8px 8px;
-            }
 
             .masonry-grid {
                 columns: 1;
@@ -578,6 +583,15 @@
             .empty-state-button {
                 padding: 10px 20px;
                 font-size: 14px;
+            }
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+                
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
             }
         }
     </style>
