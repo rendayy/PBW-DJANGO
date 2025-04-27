@@ -6,6 +6,9 @@ from email.message import EmailMessage
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib import messages
+from .models import Create
+from .forms import CreateForm 
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import Group, User
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -148,10 +151,45 @@ def staff_dashboard(request):
 
 @login_required
 def user_dashboard(request):
-    """View for regular user dashboard"""
-    if not request.user.groups.filter(name='user').exists():
-        return redirect('access_denied')
-    return render(request, 'user_dashboard.html')
+    # Ambil semua postingan user yang login
+    user_posts = Create.objects.filter(user=request.user).order_by('-tanggal_upload')
+    
+    # Hitung statistik
+    total_posts = user_posts.count()
+    approved_posts = user_posts.filter(status='a').count()
+    pending_posts = user_posts.filter(status='p').count()
+    rejected_posts = user_posts.filter(status='r').count()
+    
+    return render(request, 'user_dashboard.html', {
+        'user_posts': user_posts,
+        'total_posts': total_posts,
+        'approved_posts': approved_posts,
+        'pending_posts': pending_posts,
+        'rejected_posts': rejected_posts,
+    })
+
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Create, id=post_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = CreateForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('user_dashboard')
+    else:
+        form = CreateForm(instance=post)
+    
+    return render(request, 'edit_post.html', {
+        'form': form,
+        'post': post  # Kirim post object ke template
+    })
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Create, id=post_id, user=request.user)
+    post.delete()
+    return redirect('user_dashboard')
 
 
 # Logout
