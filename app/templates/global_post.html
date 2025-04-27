@@ -182,15 +182,23 @@
 
         .tab {
             margin-right: 24px;
-            font-weight: bold;
+            font-weight: 200;
             cursor: pointer;
             padding-bottom: 8px;
+            font-family: 'poppins'; /* Tampilan font modern */
+            font-size: 16px; /* Sesuaikan ukuran font bila perlu */
+            color: var(--text-color); /* Pastikan menggunakan variabel warna yang konsisten */
+            text-decoration: none; /* Hilangkan underline default link */
+            transition: color 0.3s ease; /* Efek transisi halus pada hover */
+        }
+
+        .tab:hover {
+            color: var(--hover-color);
         }
 
         .tab.active {
             border-bottom: 4px solid var(--text-color);
         }
-
         /* Content area */
         .content {
             margin-left: var(--sidebar-width);
@@ -258,20 +266,6 @@
 
         .download-button:hover {
             background-color: #d50021;
-        }
-
-        .more-menu {
-            position: absolute;
-            right: 8px;
-            top: 8px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
         }
 
         /* Empty state */
@@ -411,34 +405,17 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">P</div>
-        <div class="nav-item active">
+        <div class="nav-item ">
             <i class="fas fa-home"></i>
             <span class="tooltip">Beranda</span>
         </div>
-        <div class="nav-item">
-            <i class="fas fa-search"></i>
-            <span class="tooltip">Cari</span>
-        </div>
-        <div class="nav-item notifications">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge">99+</span>
-            <span class="tooltip">Notifikasi</span>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-comment"></i>
-            <span class="tooltip">Pesan</span>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-user"></i>
-            <span class="tooltip">Profil</span>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-upload"></i>
-            <span class="tooltip">Unggah</span>
+        <div class="nav-item active">
+            <i class="fas fa-globe"></i>
+            <span class="tooltip">Eksplore</span>
         </div>
         <div class="nav-item">
             <i class="fas fa-plus-circle"></i>
-            <span class="tooltip">Buat</span>
+            <span class="tooltip">Buat Postingan</span>
         </div>
     </div>
 
@@ -450,19 +427,17 @@
                 <i class="fas fa-search"></i>
             </button>
         </form>
-        <div class="kategori-list">
-            {% for kategori in kategori_list %}
-                <a href="?kategori={{ kategori }}&search={{ query }}">{{ kategori }}</a>
-            {% empty %}
-                <span>Tidak ada kategori tersedia.</span>
-            {% endfor %}
-        </div>
     </div>
 
     <!-- Tabs -->
     <div class="tabs">
-        <div class="tab active">Semua</div>
-        <div class="tab">Yang Saya Simpan</div>
+        {% for kategori in kategori_list %}
+            <a href="?kategori={{ kategori }}&search={{ query }}" class="tab {% if kategori == kategori_aktif %}active{% endif %}">
+                {{ kategori }}
+            </a>
+        {% empty %}
+            <span class="tab">Tidak ada kategori tersedia.</span>
+        {% endfor %}
     </div>
 
     <!-- Content Area -->
@@ -480,9 +455,6 @@
                     <div class="pin-title">{{ gambar.judul }}</div>
                     <div class="pin-user">{{ gambar.user.username }}</div>
                     <a href="{{ gambar.gambar.url }}" class="download-button" download>Unduh Gambar</a>
-                </div>
-                <div class="more-menu">
-                    <i class="fas fa-ellipsis-v"></i>
                 </div>
             </div>
             {% endfor %}
