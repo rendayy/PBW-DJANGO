@@ -44,7 +44,7 @@
             font-size: 14px;
         }
         .btn-primary {
-            background-color: #28a745;
+            background-color: #3579f6;
             color: white;
         }
         .btn-secondary {
@@ -58,10 +58,13 @@
             margin-bottom: 15px;
         }
         .current-image img {
-            max-width: 100%;
+            max-width: 300px;
+            max-height: 200px;
+            width: auto;
             height: auto;
             border: 1px solid #ddd;
             margin-bottom: 10px;
+            display: block;
         }
         .form-check {
             margin-top: 10px;
@@ -77,6 +80,18 @@
             font-size: 0.875em;
             margin-top: 5px;
         }
+        .image-preview {
+            max-width: 300px;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+        img.lazy {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        img.lazy.loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -88,11 +103,7 @@
             <!-- Current Image Display -->
             {% if form.instance.gambar %}
             <div class="current-image">
-                <img src="{{ form.instance.gambar.url }}" alt="Current Image">
-                <div class="form-check">
-                    <input type="checkbox" name="gambar-clear" id="gambar-clear" class="form-check-input">
-                    <label for="gambar-clear" class="form-check-label">Hapus gambar saat ini</label>
-                </div>
+                <img src="{{ form.instance.gambar.url }}" alt="Current Image" loading="lazy">
             </div>
             {% endif %}
             
@@ -139,6 +150,7 @@
                 <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Batal</a>
             </div>
         </form>
+        <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
     </div>
 
     <script>
@@ -147,10 +159,14 @@
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
+                    // Hapus preview sebelumnya jika ada
+                    var oldPreview = document.querySelector('.image-preview');
+                    if (oldPreview) oldPreview.remove();
+
+                    // Buat elemen gambar baru dengan class image-preview
                     var preview = document.createElement('img');
                     preview.src = e.target.result;
-                    preview.style.maxWidth = '200px';
-                    preview.style.marginTop = '10px';
+                    preview.className = 'image-preview';
                     
                     var container = document.querySelector('.current-image');
                     if (container) {
@@ -163,6 +179,33 @@
                     }
                 };
                 reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Lazy Load Implementation
+        document.addEventListener("DOMContentLoaded", function() {
+            let lazyImages = [].slice.call(document.querySelectorAll("img[loading='lazy']"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.classList.add("loaded");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImage.classList.add("lazy");
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // Fallback jika browser tidak support IntersectionObserver
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImage.classList.add("loaded");
+                });
             }
         });
     </script>
