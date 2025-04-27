@@ -9,7 +9,8 @@
     <style>
         :root {
             --sidebar-width: 80px;
-            --primary-color: #e60023;
+            --primary-color: #3579f6;
+            --hover-blue:#1d5cd2;
             --bg-color: #fff;
             --text-color: #111;
             --border-color: #efefef;
@@ -24,11 +25,12 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             padding: 0;
             margin: 0;
+            
         }
 
         /* Sidebar */
@@ -69,6 +71,7 @@
             cursor: pointer;
             margin-bottom: 8px;
             position: relative;
+            text-decoration: none;
         }
 
         .nav-item.active {
@@ -76,9 +79,15 @@
             border-radius: 8px;
         }
 
+        .nav-item.active,
+        .nav-item.active i {
+            color: var(--primary-color);
+        }
+
         .nav-item i {
             font-size: 20px;
             color: var(--text-color);
+            text-decoration: none;
         }
 
         /* Add tooltip */
@@ -104,23 +113,6 @@
             visibility: visible;
             opacity: 1;
         }
-
-        .notifications {
-            position: relative;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 5px;
-            right: 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 12px;
-            padding: 1px 6px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
         /* Header - Centered Search Bar */
         .header {
             flex-direction: column;
@@ -139,10 +131,10 @@
         }
 
         .search-bar {
-            flex: 1;
-            max-width: 1000px;
+            width: 100%;
+            max-width: 800px;
             position: relative;
-            margin-top: 1rem;
+            margin: 12px auto;
         }
 
         .search-bar input {
@@ -151,16 +143,19 @@
             border-radius: 24px;
             border: none;
             background-color: var(--gray-light);
-            padding: 0 500px 0 16px;
+            padding: 0 40px 0 16px;
             font-size: 16px;
+            outline: none;
         }
 
         .search-icon {
             border: none;
+            background: transparent;
             position: absolute;
-            right: 16px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
+            cursor: pointer;
         }
 
         .search-icon i {
@@ -178,6 +173,13 @@
             right: 0;
             z-index: 98;
             border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            height: 4px;
         }
 
         .tab {
@@ -190,6 +192,7 @@
             color: var(--text-color); /* Pastikan menggunakan variabel warna yang konsisten */
             text-decoration: none; /* Hilangkan underline default link */
             transition: color 0.3s ease; /* Efek transisi halus pada hover */
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -265,7 +268,7 @@
         }
 
         .download-button:hover {
-            background-color: #d50021;
+            background-color: var(--hover-blue);
         }
 
         /* Empty state */
@@ -313,7 +316,7 @@
         }
 
         .empty-state-button:hover {
-            background-color: #d50021;
+            background-color: var(--primary-color);
         }
 
         /* Responsive */
@@ -321,15 +324,23 @@
             .masonry-grid {
                 columns: 3;
             }
+            
+            .search-bar {
+                max-width: 600px;
+            }
         }
 
         @media (max-width: 768px) {
             .masonry-grid {
                 columns: 2;
             }
-
+            
             .search-bar {
-                max-width: 300px;
+                max-width: 400px;
+            }
+
+            .header {
+                padding: 0 12px;
             }
             
             .empty-state h3 {
@@ -355,12 +366,17 @@
             }
 
             .search-bar {
-                max-width: 200px;
-                margin: 0 8px;
+                max-width: 100%;
+                margin: 12px 8px;
             }
 
             .search-bar input {
                 font-size: 14px;
+                height: 36px;
+            }
+
+            .search-icon {
+                right: 10px;
             }
 
             .content {
@@ -405,19 +421,23 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">P</div>
-        <div class="nav-item ">
+    
+        <a href="{% url 'user_dashboard' %}" class="nav-item">
             <i class="fas fa-home"></i>
             <span class="tooltip">Beranda</span>
-        </div>
-        <div class="nav-item active">
+        </a>
+    
+        <a href="{% url 'gallery' %}" class="nav-item active ">
             <i class="fas fa-globe"></i>
             <span class="tooltip">Eksplore</span>
-        </div>
-        <div class="nav-item">
+        </a>
+    
+        <a href="{% url 'upload' %}" class="nav-item ">
             <i class="fas fa-plus-circle"></i>
             <span class="tooltip">Buat Postingan</span>
-        </div>
+        </a>
     </div>
+    
 
     <!-- Header -->
     <div class="header">
