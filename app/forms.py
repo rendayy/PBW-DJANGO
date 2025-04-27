@@ -31,4 +31,18 @@ class RegisterForm(UserCreationForm):
 class CreateForm(forms.ModelForm):
     class Meta:
         model = Create
-        fields = ['gambar','judul','kategori','deskripsi']
+        fields = ['gambar', 'judul', 'kategori', 'deskripsi']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['gambar'].required = False  # Gambar tidak wajib di-update
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.cleaned_data['gambar']:  # Jika upload gambar baru
+            instance.gambar = self.cleaned_data['gambar']
+        elif 'gambar-clear' in self.data:  # Jika hapus gambar
+            instance.gambar = None
+        if commit:
+            instance.save()
+        return instance
