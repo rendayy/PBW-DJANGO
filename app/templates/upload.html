@@ -4,13 +4,343 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 80px;
+            --primary-color: #718CA8;
+            --bg-color: #FFFFFF;
+            --secondary-color: #90B1C1;
+            --accent-color: #6B7292;
+            --light-color: #D4E1DF;
+            --text-color: #333;
+            --border-color: #D4E1DF;
+            --gray-light: #f0f0f0;
+            --shadow: 0 8px 20px rgba(107, 114, 146, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color); /* Changed to white */
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--bg-color);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-item {
+            width: 100%;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 8px;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            background-color: var(--gray-light);
+            border-radius: 8px;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            color: var(--text-color);
+        }
+
+        /* Add tooltip */
+        .nav-item .tooltip {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 101;
+            margin-left: 10px;
+        }
+
+        .nav-item:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .notifications {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            padding: 1px 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-left: calc(var(--sidebar-width) + 30px);
+            padding-right: 30px;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--bg-color);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color); /* Added subtle border */
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .upload-area {
+            background-color: var(--light-color);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px dashed var(--secondary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(212, 225, 223, 0.7);
+        }
+
+        .upload-icon {
+            font-size: 45px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .upload-format {
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--gray-light); /* Changed to light gray for contrast */
+            font-size: 16px;
+            box-sizing: border-box;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(113, 140, 168, 0.2);
+        }
+
+        textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        button {
+            background-color: #3579f6;
+            color: var(--bg-color);
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        ::placeholder {
+            color: #a8b0bc;
+        }
+
+        label {
+            display: none;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .main-content {
+                padding-left: 80px;
+                padding-right: 20px;
+            }
+            
+            .container {
+                padding: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-      </form>
-      
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">P</div>
+        <a href="{% url 'user_dashboard' %}" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span class="tooltip">Eksplore</span>
+        </a>
+        <a href="{% url 'gallery' %}" class="nav-item">
+            <i class="fas fa-globe"></i>
+            <span class="tooltip">Eksplore</span>
+        </a>
+        <a href="{% url 'upload' %}" class="nav-item active">
+            <i class="fas fa-plus-circle"></i>
+            <span class="tooltip">Buat</span>
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Upload Your File</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <h2>Upload File</h2>
+                <div class="upload-area">
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <div class="upload-text">Klik atau seret file disini</div>
+                    <div class="upload-format">Format yang didukung JPG dan PNG</div>
+                    <input type="file" id="file-upload" name="gambar">
+                    {{ form.gambar }}
+                </div>
+                
+                <div class="form-group">
+                    <h2>Judul</h2>
+                    <label for="{{ form.judul.id_for_label }}"></label>
+                    {{ form.judul }}
+                </div>
+                
+                <div class="form-group">
+                    <h2>Kategori</h2>
+                    <label for="{{ form.kategori.id_for_label }}"></label>
+                    {{ form.kategori }}
+                </div>
+                
+                <div class="form-group">
+                    <h2>Deskripsi</h2>
+                    <label for="{{ form.deskripsi.id_for_label }}"></label>
+                    {{ form.deskripsi }}
+                </div>
+                
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Make the upload area clickable to trigger file input
+        document.querySelector('.upload-area').addEventListener('click', function() {
+            document.getElementById('file-upload').click();
+        });
+        
+        // Display file name when selected
+        document.getElementById('file-upload').addEventListener('change', function() {
+            if(this.files[0]) {
+                document.querySelector('.upload-text').textContent = this.files[0].name;
+            }
+        });
+    </script>
 </body>
 </html>
