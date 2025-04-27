@@ -167,7 +167,7 @@
         /* Content area */
         .content {
             margin-left: var(--sidebar-width);
-            min-height: calc(100vh - 140px);
+            min-height: 100vh;
         }
 
         /* Pinterest-style Masonry Layout */
@@ -239,10 +239,12 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 40px 20px; 
-            margin: 0 auto;
+            padding: 40px 20px;
+            margin: 120px auto 0;
             max-width: 500px;
-            height: calc(100vh - 200px);
+            min-height: calc(100vh - 200px);
+            overflow: hidden;
+            position: relative;
         }
 
         .empty-state-icon {
@@ -691,16 +693,17 @@
             {% endfor %}
           </div>
         {% else %}
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <i class="far fa-images"></i>
-                </div>
-                <h3>Belum Ada Postingan</h3>
-                <p>Belum ada Postingan yang tersedia untuk ditampilkan saat ini. Gambar akan muncul di sini setelah disetujui oleh admin.</p>
-                <button class="empty-state-button">Kembali ke Beranda</button>
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="far fa-images"></i>
             </div>
+            <h3>Belum Ada Postingan</h3>
+            <p>Belum ada Postingan yang tersedia untuk ditampilkan saat ini. Gambar akan muncul di sini setelah disetujui oleh admin.</p>
+            <a href="{% url 'upload' %}" class="empty-state-button" style="text-decoration: none;">Upload</a>
+        </div>
         {% endif %}
     </div>
+
 
     <script>
         // Script to handle tab switching

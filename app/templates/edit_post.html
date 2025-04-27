@@ -1,170 +1,513 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Postingan</title>
+    <!-- Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f5f5f5;
+        :root {
+            --primary: #3579f6;
+            --primary-hover: #1d5cd2;
+            --secondary: #6c757d;
+            --secondary-hover: #5a6268;
+            --danger: #dc3545;
+            --light-bg: #f8f9fa;
+            --border: #e0e0e0;
+            --text: #333;
+            --text-light: #666;
+            --shadow: 0 2px 10px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
         }
-        .edit-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, textarea, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
-        textarea {
-            min-height: 100px;
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #f5f8ff;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
+
+        .edit-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
-        .btn-primary {
-            background-color: #28a745;
-            color: white;
+
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
         }
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-        .current-image {
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        .current-image img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
+
+        .header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
             margin-bottom: 10px;
         }
-        .form-check {
+
+        .header p {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(53, 121, 246, 0.15);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
             margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .btn i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(53, 121, 246, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+            transform: translateY(-2px);
+        }
+
+        .image-preview-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            background-color: var(--light-bg);
+            position: relative;
+        }
+
+        .image-preview-area:hover {
+            border-color: var(--primary);
+        }
+
+        .current-image {
+            margin-bottom: 15px;
+        }
+
+        .current-image img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .upload-icon {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .form-check {
             display: flex;
             align-items: center;
+            margin-top: 12px;
         }
+
         .form-check-input {
-            width: auto;
+            width: 18px;
+            height: 18px;
             margin-right: 10px;
+            cursor: pointer;
         }
+
+        .form-check-label {
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .file-input-button:hover {
+            background-color: var(--primary-hover);
+        }
+
         .error-message {
-            color: #dc3545;
-            font-size: 0.875em;
+            color: var(--danger);
+            font-size: 13px;
             margin-top: 5px;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .delete-preview {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .delete-preview:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .edit-container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            
+            .header h2 {
+                font-size: 24px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 10px;
+            }
+            
+            .edit-container {
+                padding: 15px;
+                margin: 10px auto;
+                border-radius: 8px;
+            }
+            
+            .header {
+                margin-bottom: 20px;
+            }
+            
+            .header h2 {
+                font-size: 20px;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            label {
+                font-size: 14px;
+            }
+            
+            input, textarea, select {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="edit-container">
-        <h2>Edit Postingan</h2>
+        <div class="header">
+            <h2>Edit Postingan</h2>
+            <p>Perbarui detail dan gambar untuk postingan Anda</p>
+        </div>
+        
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             
-            <!-- Current Image Display -->
-            {% if form.instance.gambar %}
-            <div class="current-image">
-                <img src="{{ form.instance.gambar.url }}" alt="Current Image">
-                <div class="form-check">
-                    <input type="checkbox" name="gambar-clear" id="gambar-clear" class="form-check-input">
-                    <label for="gambar-clear" class="form-check-label">Hapus gambar saat ini</label>
+            <!-- Image Upload Area -->
+            <div class="image-preview-area" id="dropArea">
+                {% if form.instance.gambar %}
+                <div class="current-image" id="currentImage">
+                    <img src="{{ form.instance.gambar.url }}" alt="Current Image" id="existingImage">
+                    <div class="form-check">
+                        <input type="checkbox" name="gambar-clear" id="gambar-clear" class="form-check-input">
+                        <label for="gambar-clear" class="form-check-label">
+                            <i class="fas fa-trash-alt"></i> Hapus gambar saat ini
+                        </label>
+                    </div>
                 </div>
-            </div>
-            {% endif %}
-            
-            <!-- New Image Upload -->
-            <div class="form-group">
-                <label for="id_gambar">
-                    {% if form.instance.gambar %}Ganti Gambar{% else %}Upload Gambar{% endif %}
-                </label>
-                <input type="file" name="gambar" id="id_gambar" class="form-control" accept="image/*">
+                {% else %}
+                <div class="upload-placeholder" id="uploadPlaceholder">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p class="upload-text">Klik atau seret gambar ke sini</p>
+                </div>
+                {% endif %}
+                
+                <div class="file-input-container">
+                    <span class="file-input-button">
+                        <i class="fas fa-image"></i> Pilih Gambar
+                    </span>
+                    <input type="file" name="gambar" id="id_gambar" class="file-input" accept="image/*">
+                </div>
+                
                 {% if form.gambar.errors %}
-                    <div class="error-message">{{ form.gambar.errors }}</div>
+                <div class="error-message">{{ form.gambar.errors }}</div>
                 {% endif %}
             </div>
             
             <!-- Title Field -->
             <div class="form-group">
-                <label for="id_judul">Judul</label>
-                <input type="text" name="judul" id="id_judul" class="form-control" value="{{ form.judul.value|default_if_none:'' }}">
+                <label for="id_judul">
+                    <i class="fas fa-heading"></i> Judul
+                </label>
+                <input type="text" name="judul" id="id_judul" placeholder="Masukkan judul postingan" value="{{ form.judul.value|default_if_none:'' }}">
                 {% if form.judul.errors %}
-                    <div class="error-message">{{ form.judul.errors }}</div>
+                <div class="error-message">{{ form.judul.errors }}</div>
                 {% endif %}
             </div>
             
             <!-- Category Field -->
             <div class="form-group">
-                <label for="id_kategori">Kategori</label>
-                <input type="text" name="kategori" id="id_kategori" class="form-control" value="{{ form.kategori.value|default_if_none:'' }}">
+                <label for="id_kategori">
+                    <i class="fas fa-tag"></i> Kategori
+                </label>
+                <input type="text" name="kategori" id="id_kategori" placeholder="Contoh: Fotografi, Seni, Teknologi" value="{{ form.kategori.value|default_if_none:'' }}">
                 {% if form.kategori.errors %}
-                    <div class="error-message">{{ form.kategori.errors }}</div>
+                <div class="error-message">{{ form.kategori.errors }}</div>
                 {% endif %}
             </div>
             
             <!-- Description Field -->
             <div class="form-group">
-                <label for="id_deskripsi">Deskripsi</label>
-                <textarea name="deskripsi" id="id_deskripsi" class="form-control">{{ form.deskripsi.value|default_if_none:'' }}</textarea>
+                <label for="id_deskripsi">
+                    <i class="fas fa-align-left"></i> Deskripsi
+                </label>
+                <textarea name="deskripsi" id="id_deskripsi" placeholder="Deskripsikan postingan Anda">{{ form.deskripsi.value|default_if_none:'' }}</textarea>
                 {% if form.deskripsi.errors %}
-                    <div class="error-message">{{ form.deskripsi.errors }}</div>
+                <div class="error-message">{{ form.deskripsi.errors }}</div>
                 {% endif %}
             </div>
             
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Batal</a>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Simpan Perubahan
+                </button>
+                <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Batal
+                </a>
             </div>
         </form>
     </div>
 
     <script>
         // Preview image before upload
-        document.getElementById('id_gambar').addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var preview = document.createElement('img');
-                    preview.src = e.target.result;
-                    preview.style.maxWidth = '200px';
-                    preview.style.marginTop = '10px';
-                    
-                    var container = document.querySelector('.current-image');
-                    if (container) {
-                        container.insertBefore(preview, container.firstChild);
-                    } else {
-                        var newContainer = document.createElement('div');
-                        newContainer.className = 'current-image';
-                        newContainer.appendChild(preview);
-                        document.querySelector('form').insertBefore(newContainer, document.querySelector('.form-group'));
-                    }
-                };
-                reader.readAsDataURL(this.files[0]);
+        const imageInput = document.getElementById('id_gambar');
+        const dropArea = document.getElementById('dropArea');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        
+        // Handle file selection
+        imageInput.addEventListener('change', function(e) {
+            handleImagePreview(this.files[0]);
+        });
+        
+        // Handle drag and drop
+        dropArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropArea.style.borderColor = 'var(--primary)';
+            dropArea.style.backgroundColor = 'rgba(53, 121, 246, 0.05)';
+        });
+        
+        dropArea.addEventListener('dragleave', function() {
+            dropArea.style.borderColor = 'var(--border)';
+            dropArea.style.backgroundColor = 'var(--light-bg)';
+        });
+        
+        dropArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropArea.style.borderColor = 'var(--border)';
+            dropArea.style.backgroundColor = 'var(--light-bg)';
+            
+            if (e.dataTransfer.files.length) {
+                handleImagePreview(e.dataTransfer.files[0]);
+                imageInput.files = e.dataTransfer.files;
             }
         });
+        
+        function handleImagePreview(file) {
+            if (file) {
+                // Remove existing preview if any
+                const existingPreview = document.querySelector('.image-preview');
+                if (existingPreview) {
+                    existingPreview.remove();
+                }
+                
+                // Hide upload placeholder if exists
+                if (uploadPlaceholder) {
+                    uploadPlaceholder.style.display = 'none';
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Create new preview
+                    const preview = document.createElement('img');
+                    preview.src = e.target.result;
+                    preview.classList.add('image-preview');
+                    
+                    // Create delete button
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.classList.add('delete-preview');
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.addEventListener('click', function() {
+                        preview.remove();
+                        deleteBtn.remove();
+                        imageInput.value = '';
+                        if (uploadPlaceholder) {
+                            uploadPlaceholder.style.display = 'block';
+                        }
+                    });
+                    
+                    // Add to DOM
+                    dropArea.appendChild(preview);
+                    dropArea.appendChild(deleteBtn);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Handle the clear checkbox
+        const clearCheckbox = document.getElementById('gambar-clear');
+        const existingImage = document.getElementById('existingImage');
+        const currentImage = document.getElementById('currentImage');
+        
+        if (clearCheckbox && existingImage) {
+            clearCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    existingImage.style.opacity = '0.3';
+                } else {
+                    existingImage.style.opacity = '1';
+                }
+            });
+        }
     </script>
 </body>
 </html>
