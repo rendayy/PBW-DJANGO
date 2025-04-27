@@ -123,6 +123,7 @@
 
         /* Header - Centered Search Bar */
         .header {
+            flex-direction: column;
             position: fixed;
             top: 0;
             left: var(--sidebar-width);
@@ -139,8 +140,9 @@
 
         .search-bar {
             flex: 1;
-            max-width: 800px;
+            max-width: 1000px;
             position: relative;
+            margin-top: 1rem;
         }
 
         .search-bar input {
@@ -149,11 +151,12 @@
             border-radius: 24px;
             border: none;
             background-color: var(--gray-light);
-            padding: 0 40px 0 16px;
+            padding: 0 500px 0 16px;
             font-size: 16px;
         }
 
         .search-icon {
+            border: none;
             position: absolute;
             right: 16px;
             top: 50%;
@@ -441,11 +444,18 @@
 
     <!-- Header -->
     <div class="header">
-        <div class="search-bar">
-            <input type="text" placeholder="Cari">
-            <span class="search-icon">
+        <form class="search-bar" method="get" action="">
+            <input type="text" name="search" placeholder="Cari" value="{{ query }}">
+            <button type="submit" class="search-icon">
                 <i class="fas fa-search"></i>
-            </span>
+            </button>
+        </form>
+        <div class="kategori-list">
+            {% for kategori in kategori_list %}
+                <a href="?kategori={{ kategori }}&search={{ query }}">{{ kategori }}</a>
+            {% empty %}
+                <span>Tidak ada kategori tersedia.</span>
+            {% endfor %}
         </div>
     </div>
 
