@@ -52,13 +52,15 @@ def register_view(request):
 def send_otp(otp_code, request):
     # Ambil email dari sesi
     email = request.session.get('email')  
+    username = request.session.get('username')  # Get the username from the session
     
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
 
-        html_content = render_to_string('otp_email.html', {'otp_code': otp_code})
+        # Pass the username to the email template context
+        html_content = render_to_string('otp_email.html', {'otp_code': otp_code, 'username': username})
 
         message = EmailMessage()
         message['Subject'] = 'OTP Verification'
