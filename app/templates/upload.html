@@ -269,6 +269,16 @@
             display: none;
         }
 
+        .logout {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
         /* Responsive Breakpoints */
         @media screen and (max-width: 1200px) {
             .container {
@@ -452,6 +462,10 @@
         <a href="{% url 'upload' %}" class="nav-item active">
             <i class="fas fa-plus-circle"></i>
             <span class="tooltip">Buat</span>
+        </a>
+        <a href="{% url 'logout' %}" class="nav-item logout ">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="tooltip">Log out</span>
         </a>
     </div>
 

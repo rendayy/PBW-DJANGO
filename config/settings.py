@@ -28,10 +28,13 @@ EMAIL_ADDRESS = 'otpserverr@gmail.com'
 EMAIL_PASSWORD = 'wfrm otby uffl fjqm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0151-103-165-213-194.ngrok-free.app',
+]
 
 # Application definition
 
@@ -58,6 +61,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://0151-103-165-213-194.ngrok-free.app',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -92,6 +99,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'pabw.db',
     }
 }
+
+print(f"Database path: {DATABASES['default']['NAME']}")
+
 
 
 # Password validation
